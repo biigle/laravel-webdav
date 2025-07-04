@@ -1,5 +1,5 @@
 <?php
-namespace SingleQuote\WebDav;
+namespace Biigle\WebDav;
 
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
@@ -29,13 +29,5 @@ class WebDavServiceProvider extends ServiceProvider
                 $config
             );
         });
-    }
-
-    /**
-     * Register the application services.
-     */
-    public function register()
-    {
-        
     }
 }

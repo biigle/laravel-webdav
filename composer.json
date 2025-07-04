@@ -1,5 +1,5 @@
 {
-    "name": "singlequote/laravel-webdav",
+    "name": "biigle/laravel-webdav",
     "description": "",
     "keywords": [
         "webdav",
@@ -7,13 +7,17 @@
         "filesystem",
         "laravel"
     ],
-    "homepage": "https://github.com/singlequote/laravel-webdav",
+    "homepage": "https://github.com/biigle/laravel-webdav",
     "license": "MIT",
     "authors": [
         {
             "name": "Wim Pruiksma",
             "email": "wim@quotec.nl",
             "homepage": "https://quotec.nl/"
+        },
+        {
+            "name": "Martin Zurowietz",
+            "email": "m.zurowietz@uni-bielefeld.de"
         }
     ],
     "require": {
@@ -21,35 +25,16 @@
         "laravel/framework": ">=10",
         "league/flysystem-webdav": "^3.15"
     },
-    "require-dev": {
-        
-    },
     "autoload": {
         "psr-4": {
-            "SingleQuote\\WebDav\\": "src"
+            "Biigle\\WebDav\\": "src"
         }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "SingleQuote\\WebDav\\Tests\\": "tests"
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
-    },
-    "config": {
-        "sort-packages": true
     },
     "extra": {
         "laravel": {
             "providers": [
-                "SingleQuote\\WebDav\\WebDavServiceProvider"
-            ],
-            "aliases": {
-                "WebDav": "SingleQuote\\WebDav\\WebDavFacade"
-            }
+                "Biigle\\WebDav\\WebDavServiceProvider"
+            ]
         }
     }
 }
