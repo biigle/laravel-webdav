@@ -1,6 +1,6 @@
-# Laravel WebDav
+# Laravel WebDAV
 
-A WebDAV driver for Laravel. This is a fork of [singlequote/laravel-webdav](https://github.com/singlequote/laravel-webdav) which improves streamed responses.
+A WebDAV filesystem driver for Laravel. This is a fork of [singlequote/laravel-webdav](https://github.com/singlequote/laravel-webdav) which improves streamed responses.
 
 
 ### Installation
@@ -100,7 +100,3 @@ Possible encoding types listed below
 | 2 | Deflate encoding |
 | 4 | Gzip encoding |
 | 7 | Sends all encoding headers |
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
