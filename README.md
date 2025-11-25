@@ -16,6 +16,9 @@ WEBDAV_BASEURL=""
 WEBDAV_USERNAME=
 WEBDAV_PASSWORD=
 
+# or as alternative to username and password a bearer token:
+WEBDAV_TOKEN=
+
 # Optional
 WEBDAV_PROXY=
 WEBDAV_PATHPREFIX=""
@@ -29,20 +32,23 @@ WEBDAV_ENCODING=
 ```php
 
 'disks' => [
-	...
-	'webdav' => [
-	    'driver'     => 'webdav',
-	    'baseUri'    => env("WEBDAV_BASEURL"),
-	    'userName'   => env("WEBDAV_USERNAME"),
-	    'password'   => env("WEBDAV_PASSWORD"),
-	    'pathPrefix' => env("WEBDAV_PATHPREFIX", ''),
+    ...
+    'webdav' => [
+        'driver'     => 'webdav',
+        'baseUri'    => env("WEBDAV_BASEURL"),
+        'userName'   => env("WEBDAV_USERNAME"),
+        'password'   => env("WEBDAV_PASSWORD"),
+        'pathPrefix' => env("WEBDAV_PATHPREFIX", ''),
 
-	    // Optional prameters
-	    // 'proxy'      => env("WEBDAV_PROXY", 'locahost:8888'),
-	    // 'authType'   => env("WEBDAV_AUTHTYPE", null),
-	    // 'encoding'   => env("WEBDAV_ENCODING", null),
-	],
-	...
+        // Alternative to userName and password
+        'token'   => env("WEBDAV_TOKEN"),
+
+        // Optional prameters
+        // 'proxy'      => env("WEBDAV_PROXY", 'locahost:8888'),
+        // 'authType'   => env("WEBDAV_AUTHTYPE", null),
+        // 'encoding'   => env("WEBDAV_ENCODING", null),
+    ],
+    ...
 ];
 ```
 After adding the config entry you can use it in your storage driver.
@@ -60,8 +66,8 @@ Storage::disk('webdav')->files('...')
 When using your webdav server behind a proxy, use the `proxy` config parameter to set our proxy url
 ```php
 'webdav' => [
-	...
-	'proxy'      => env("WEBDAV_PROXY", 'locahost:8888'),
+    ...
+    'proxy'      => env("WEBDAV_PROXY", 'locahost:8888'),
 ]
 ```
 
@@ -69,8 +75,8 @@ When using your webdav server behind a proxy, use the `proxy` config parameter t
 If you know which authentication method will be used, it's recommended to set it, as it will save a great deal of requests to 'discover' this information.
 ```php
 'webdav' => [
-	...
-	'authType'      => env("WEBDAV_AUTHTYPE", 1), // 1 = Uses Basic authentication
+    ...
+    'authType'      => env("WEBDAV_AUTHTYPE", 1), // 1 = Uses Basic authentication
 ]
 ```
 
@@ -87,8 +93,8 @@ This wil set the encoding parameter.
 
 ```php
 'webdav' => [
-	...
-	'encoding'      => env("WEBDAV_ENCODING", 1), // 1 = Uses Identity encoding
+    ...
+    'encoding'      => env("WEBDAV_ENCODING", 1), // 1 = Uses Identity encoding
 ]
 ```
 
