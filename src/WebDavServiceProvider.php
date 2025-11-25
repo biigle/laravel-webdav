@@ -35,6 +35,10 @@ class WebDavServiceProvider extends ServiceProvider
                 }  else if ($config['authType'] === 4) {
                     array_push($guzzleConfig['auth'], 'ntlm');
                 }
+            } else if (!empty($config['token'] ?? false)) {
+                $guzzleConfig['headers'] = [
+                    'Authorization' => 'Bearer ' . $config['token'],
+                ];
             }
 
             $webdavClient = new WebDAVClient($config);
