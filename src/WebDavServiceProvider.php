@@ -25,6 +25,8 @@ class WebDavServiceProvider extends ServiceProvider
                 $guzzleConfig['proxy'] = $config['proxy'];
             }
 
+            $tokenAuth = false;
+
             if (!empty($config['userName'] ?? false) || !empty($config['password'] ?? false)) {
                 $guzzleConfig['auth'] = [$config['userName'], $config['password']];
 
@@ -36,12 +38,17 @@ class WebDavServiceProvider extends ServiceProvider
                     array_push($guzzleConfig['auth'], 'ntlm');
                 }
             } else if (!empty($config['token'] ?? false)) {
-                $guzzleConfig['headers'] = [
-                    'Authorization' => 'Bearer ' . $config['token'],
-                ];
+                $tokenAuth = true;
             }
 
             $webdavClient = new WebDAVClient($config);
+
+            if ($tokenAuth) {
+                $token = 'Bearer ' . $config['token'];
+                $guzzleConfig['headers'] = ['Authorization' => $token];
+                $webdavClient->on('beforeRequest', fn ($request) => $request->setHeader('Authorization', $token));
+            }
+
             $guzzleClient = new GuzzleClient($guzzleConfig);
 
             $adapter = new WebDAVAdapter($webdavClient, $guzzleClient, $pathPrefix);
