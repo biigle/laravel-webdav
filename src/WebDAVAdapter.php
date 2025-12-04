@@ -7,6 +7,7 @@ use League\Flysystem\PathPrefixer;
 use League\Flysystem\UnableToReadFile;
 use League\Flysystem\WebDAV\WebDAVAdapter as Base;
 use Sabre\DAV\Client as WebADVClient;
+use Sabre\HTTP\ClientHttpException;
 
 class WebDAVAdapter extends Base
 {
@@ -34,6 +35,20 @@ class WebDAVAdapter extends Base
             return $response->getBody()->detach();
         } catch (Throwable $exception) {
             throw UnableToReadFile::fromLocation($path, $exception->getMessage(), $exception);
+        }
+    }
+
+    public function listContents(string $path, bool $deep): iterable
+    {
+        try {
+            foreach (parent::listContents($path, $deep) as $item) {
+                yield $item;
+            }
+        } catch (ClientHttpException $e) {
+            if ($e->getHttpStatus() === 404) {
+                return;
+            }
+            throw $e;
         }
     }
 }
