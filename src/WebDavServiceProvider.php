@@ -11,13 +11,14 @@ use GuzzleHttp\Client as GuzzleClient;
 
 class WebDavServiceProvider extends ServiceProvider
 {
+    const DISK_TYPE = 'webdav';
 
     /**
      * Bootstrap the application services.
      */
     public function boot()
     {
-        Storage::extend('webdav', function ($app, $config) {
+        Storage::extend(static::DISK_TYPE, function ($app, $config) {
             $pathPrefix = $config['pathPrefix'] ?? null;
 
             $guzzleConfig = [];
