@@ -51,7 +51,7 @@ class WebDavServiceProvider extends ServiceProvider
 
             $guzzleClient = new GuzzleClient($guzzleConfig);
 
-            $adapter = new WebDAVAdapter($webdavClient, $guzzleClient, $pathPrefix);
+            $adapter = $this->getWebDavAdapter($webdavClient, $guzzleClient, $pathPrefix);
 
             return new FilesystemAdapter(
                 new Filesystem($adapter, $config),
@@ -59,5 +59,13 @@ class WebDavServiceProvider extends ServiceProvider
                 $config
             );
         });
+    }
+
+    /**
+     * Build and return the WebDAV adapter. This simplifies extension by other packages.
+     */
+    protected function getWebDavAdapter($webdavClient, $guzzleClient, $pathPrefix): WebDAVAdapter
+    {
+        return new WebDAVAdapter($webdavClient, $guzzleClient, $pathPrefix);
     }
 }
