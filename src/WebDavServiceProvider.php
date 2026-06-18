@@ -18,7 +18,9 @@ class WebDavServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Storage::extend(static::DISK_TYPE, function ($app, $config) {
+        // Laravel 13 overrides $this in the closure so we need a separate reference.
+        $provider = $this;
+        Storage::extend(static::DISK_TYPE, function ($app, $config) use ($provider) {
             $pathPrefix = $config['pathPrefix'] ?? null;
 
             $guzzleConfig = [];
@@ -52,7 +54,7 @@ class WebDavServiceProvider extends ServiceProvider
 
             $guzzleClient = new GuzzleClient($guzzleConfig);
 
-            $adapter = $this->getWebDavAdapter($webdavClient, $guzzleClient, $pathPrefix);
+            $adapter = $provider->getWebDavAdapter($webdavClient, $guzzleClient, $pathPrefix);
 
             return new FilesystemAdapter(
                 new Filesystem($adapter, $config),
