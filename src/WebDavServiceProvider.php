@@ -21,7 +21,7 @@ class WebDavServiceProvider extends ServiceProvider
         // Laravel 13 overrides $this in the closure so we need a separate reference.
         $provider = $this;
         Storage::extend(static::DISK_TYPE, function ($app, $config) use ($provider) {
-            $pathPrefix = $config['pathPrefix'] ?? null;
+            $pathPrefix = $config['pathPrefix'] ?? '';
 
             $guzzleConfig = [];
             if (array_key_exists('proxy', $config)) {
