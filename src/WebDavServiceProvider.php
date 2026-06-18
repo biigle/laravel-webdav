@@ -67,7 +67,7 @@ class WebDavServiceProvider extends ServiceProvider
     /**
      * Build and return the WebDAV adapter. This simplifies extension by other packages.
      */
-    protected function getWebDavAdapter($webdavClient, $guzzleClient, $pathPrefix): WebDAVAdapter
+    public function getWebDavAdapter($webdavClient, $guzzleClient, $pathPrefix): WebDAVAdapter
     {
         return new WebDAVAdapter($webdavClient, $guzzleClient, $pathPrefix);
     }
