@@ -17,6 +17,7 @@ class WebDAVAdapter extends Base
         protected WebADVClient $client,
         protected GuzzleClient $guzzle,
         string $prefix = '',
+        protected ?string $url = null,
         protected string $visibilityHandling = self::ON_VISIBILITY_THROW_ERROR,
         protected bool $manualCopy = false,
         protected bool $manualMove = false,
@@ -50,5 +51,16 @@ class WebDAVAdapter extends Base
             }
             throw $e;
         }
+    }
+
+    public function getUrl($path): string
+    {
+        if (is_null($this->url)) {
+            return $this->publicUrl($path);
+        }
+
+        $path = $this->encodePath($this->prefixer->prefixPath($path));
+
+        return rtrim($this->url, '/').'/'.ltrim($path, '/');
     }
 }
