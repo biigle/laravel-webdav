@@ -22,6 +22,7 @@ class WebDavServiceProvider extends ServiceProvider
         $provider = $this;
         Storage::extend(static::DISK_TYPE, function ($app, $config) use ($provider) {
             $pathPrefix = $config['pathPrefix'] ?? '';
+            $url = $config['url'] ?? null;
 
             $guzzleConfig = [];
             if (array_key_exists('proxy', $config)) {
@@ -54,7 +55,7 @@ class WebDavServiceProvider extends ServiceProvider
 
             $guzzleClient = new GuzzleClient($guzzleConfig);
 
-            $adapter = $provider->getWebDavAdapter($webdavClient, $guzzleClient, $pathPrefix);
+            $adapter = $provider->getWebDavAdapter($webdavClient, $guzzleClient, $pathPrefix, $url);
 
             return new FilesystemAdapter(
                 new Filesystem($adapter, $config),
@@ -67,8 +68,8 @@ class WebDavServiceProvider extends ServiceProvider
     /**
      * Build and return the WebDAV adapter. This simplifies extension by other packages.
      */
-    public function getWebDavAdapter($webdavClient, $guzzleClient, $pathPrefix): WebDAVAdapter
+    public function getWebDavAdapter($webdavClient, $guzzleClient, $pathPrefix, $url = null): WebDAVAdapter
     {
-        return new WebDAVAdapter($webdavClient, $guzzleClient, $pathPrefix);
+        return new WebDAVAdapter($webdavClient, $guzzleClient, $pathPrefix, $url);
     }
 }
